@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veleroui-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: veleroui
+  template:
+    metadata:
+      labels:
+        app: veleroui
+    spec:
+      serviceAccountName: myapp-serviceaccount
+      containers:
+      - name: veleroui
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: 5000
+        env:
+          - name: VELERO_NAMESPACE
+            value: {{ .Release.Namespace }}
+          - name: LOG_LEVEL
+            value: {{ .Values.logLevel }}

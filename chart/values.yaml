@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: majidni/veleroui
+  pullPolicy: IfNotPresent
+  tag: "0.0.1-poetry"
+
+service:
+  type: ClusterIP
+  port: 80
+
+logLevel: DEBUG
+
+ingress:
+  enabled: true
+  annotations: {}
+  host: chart-example.local   # Define the host directly under ingress
+  paths:                      # Define paths directly under ingress
+    - path: /
+      pathType: ImplementationSpecific
